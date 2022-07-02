@@ -3,3 +3,35 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, pre, strong, a, input, button{
 	font-family: 'Quicksand', sans-serif;
 	box-sizing: border-box;
 }
+html, body{
+	background: #8C11BE;
+}
+input{
+	height: 60px;
+	width: 100%;
+	background: #FFFFFF;
+	border-radius: 5px;
+	padding: 15px;
+	font-size: 20px;
+	border: none;
+}
+input::placeholder{
+	color: #7E7E7E;
+}
+input::focus{
+
+}
+form .btn{
+	height: 60px;
+	width: 100%;
+	background: #A328D6;
+	border-radius: 5px;
+	color: #FFFFFF;
+	font-size: 20px;
+	line-height: 23px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	cursor: pointer;
+}
