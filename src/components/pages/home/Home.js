@@ -27,7 +27,7 @@ export default function Home() {
 
         promise.then(response => {
 
-            //setRegisters(response.data);
+            setRegisters(response.data);
             console.log(response.data);
         });
 
@@ -47,16 +47,22 @@ export default function Home() {
                 <Records>
                     {registers == null ? (<DefaultInfoBox>Não há registros de entrada ou saída</DefaultInfoBox>) : (
 
-                        <Item>
 
-                            <div className="title">
-                                <span>05/11</span>
-                                Churrasco de Picanha
-                            </div>
-                            <div className="value green">
-                                500,00
-                            </div>
-                        </Item>
+                        registers.map( item =>
+                        
+                                    <Item>
+                                        <div className="title">
+                                            <span>05/11</span>
+                                            {item.description}
+                                        </div>
+                                        <div className={item.type == "income" ? "value green" : "value red" }  >
+                                            {item.type == "income" ? "+ " : "- " }
+                                            {item.value}
+                                        </div>
+                                    </Item> 
+                        )
+
+
 
                     )}
                 </Records>
