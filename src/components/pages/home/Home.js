@@ -23,7 +23,7 @@ export default function Home() {
             headers: { Authorization: `Bearer ${user.token}` }
         };
 
-        const promise = axios.get(`http://127.0.0.1:5000/get-registers`, config);
+        const promise = axios.get(`https://jeffebido-mywallet-back.herokuapp.com/get-registers`, config);
 
         promise.then(response => {
 

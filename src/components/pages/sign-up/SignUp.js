@@ -19,7 +19,7 @@ export default function SignUp() {
         
         
 
-		axios.post("http://127.0.0.1:5000/sign-up", {
+		axios.post("https://jeffebido-mywallet-back.herokuapp.com/sign-up", {
             name: formName,
             email: formEmail,
             password: formPassword, 

@@ -21,7 +21,7 @@ export default function NewExpense() {
             headers: { Authorization: `Bearer ${user.token}`, type: "expense" }
         };
 
-        axios.post("http://127.0.0.1:5000/new-register", {
+        axios.post("https://jeffebido-mywallet-back.herokuapp.com/new-register", {
             value: formValue,
             description: formDesc
 		}, config)

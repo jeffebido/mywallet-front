@@ -20,7 +20,7 @@ export default function NewIncome() {
             headers: { Authorization: `Bearer ${user.token}`, type: "income" }
         };
 
-        axios.post("http://127.0.0.1:5000/new-register", {
+        axios.post("https://jeffebido-mywallet-back.herokuapp.com/new-register", {
             value: formValue,
             description: formDesc
 		}, config)
