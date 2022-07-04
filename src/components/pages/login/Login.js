@@ -26,7 +26,7 @@ export default function Login() {
 
             setUser(response.data);//Salva dados no Contexto
 
-            localStorage.setItem("user", response.data);
+            localStorage.setItem("user", JSON.stringify( response.data));
 
 
             navigate("/home");

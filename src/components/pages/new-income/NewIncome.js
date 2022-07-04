@@ -7,9 +7,38 @@ import {useAuth} from "../../../providers/Auth";
 export default function NewIncome() {
 
     const navigate = useNavigate();
+    const {user} = useAuth();
 
     const [formValue, setFormValue] = useState("");
     const [formDesc, setFormDesc] = useState("");
+
+    function enviaForm (event) {
+
+        event.preventDefault();
+
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}`, type: "income" }
+        };
+
+        axios.post("http://127.0.0.1:5000/new-register", {
+            value: formValue,
+            description: formDesc
+		}, config)
+        .then( response => {
+
+
+
+
+            navigate("/home");
+            
+           
+        } )
+        .catch((err) => {
+
+            console.error(err);
+            alert("Ddados Inválidos");
+        });
+    }
 
     return (
 
@@ -20,7 +49,7 @@ export default function NewIncome() {
                     <h1>Nova Entrada </h1>
                 </Header>
 
-                <form>
+                <form onSubmit={enviaForm}>
                     <input type="number" placeholder="Valor" value={formValue} onChange={e => setFormValue(e.target.value)} required ></input>
                     <input type="text" placeholder="Descrição" value={formDesc} onChange={e => setFormDesc(e.target.value)} required ></input>
                     

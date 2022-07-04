@@ -12,13 +12,24 @@ import MinusIcon from '../../../img/minus-icon.svg';
 export default function Home() {
 
     const navigate = useNavigate();
+    const {user} = useAuth();
 
-    const [registers, setRegisters] = useState([]);
+    const [registers, setRegisters] = useState();
 
 
     useEffect(() => {
 
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}` }
+        };
 
+        const promise = axios.get(`http://127.0.0.1:5000/get-registers`, config);
+
+        promise.then(response => {
+
+            //setRegisters(response.data);
+            console.log(response.data);
+        });
 
      
     }, []);
@@ -29,59 +40,46 @@ export default function Home() {
             <Container>
 
                 <Header>
-                    <h1> Olá, Fulano </h1>
+                    <h1> Olá, {user.name} </h1>
                     <img src={LogoutIcon}/>
                 </Header>
                 
                 <Records>
-                    <Item>
+                    {registers == null ? (<DefaultInfoBox>Não há registros de entrada ou saída</DefaultInfoBox>) : (
 
-                        <div className="title">
-                            <span>05/11</span>
-                            Churrasco de Picanha
-                        </div>
-                        <div className="value green">
-                            500,00
-                        </div>
-                    </Item>
+                        <Item>
 
-                    <Item>
+                            <div className="title">
+                                <span>05/11</span>
+                                Churrasco de Picanha
+                            </div>
+                            <div className="value green">
+                                500,00
+                            </div>
+                        </Item>
 
-                        <div className="title">
-                            <span>05/11</span>
-                            Churrasco de Picanha
-                        </div>
-                        <div className="value green">
-                            500,00
-                        </div>
-                    </Item>
-
-                    <Item>
-
-                        <div className="title">
-                            <span>05/11</span>
-                            Churrasco de Picanha
-                        </div>
-                        <div className="value red">
-                            500,00
-                        </div>
-                    </Item>
-
-
-                    <DefaultInfoBox>
-                        Não há registros de entrada ou saída
-                    </DefaultInfoBox>
+                    )}
                 </Records>
 
                 <Footer>
-                    <Buttom>
-                         <img src={PlusIcon}/>
-                         <h4>Nova <br /> entrada</h4>
-                    </Buttom>
-                    <Buttom>
-                         <img src={MinusIcon}/>
-                         <h4>Nova <br /> saída</h4>
-                    </Buttom>
+                    <Link to={`/new-income`} >
+                        <Buttom>
+                            
+                            <img src={PlusIcon}/>
+                            <h4>Nova <br /> entrada</h4>
+                            
+                        </Buttom>
+                    </Link>
+                    
+                    
+                    <Link to={`/new-expense`} >
+                        <Buttom>
+                            <img src={MinusIcon}/>
+                            <h4>Nova <br /> saída</h4>
+                        </Buttom>
+                    </Link>
+                    
+                    
                 </Footer>
 
             </Container>
@@ -121,17 +119,22 @@ const Footer = styled.div`
     padding-bottom: 15px;
     display: flex;
     justify-content: space-between;
+    a{
+        color: #fff;
+        text-decoration: none;
+        width: 49%;
+    }
 `;
 const Buttom = styled.div`
     height: 100%;
-    width: 49%;
+
     background: #A328D6;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    cursor: pointer;
+    
     font-size: 17px;
     line-height: 20px;
     color: #fff;
@@ -140,6 +143,7 @@ const Buttom = styled.div`
         height: 25px;
         width: auto;
     }
+   
 `;
 const DefaultInfoBox = styled.div`
     color: #868686;
@@ -147,7 +151,7 @@ const DefaultInfoBox = styled.div`
     line-height: 23px;
     height: 100%;
     width: 100%;
-    display: none;//flex ou none
+    display: flex;//flex ou none
     align-items: center;
     justify-content: center;
     padding: 75px;

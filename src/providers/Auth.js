@@ -6,20 +6,17 @@ export const AuthProvider = (props) => {
 
     const userStorage = localStorage.getItem("user");
     
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
     
     useEffect(() => {
         
          
           
-            
-          if (userStorage) {
+        if (userStorage) {
 
             setUser(JSON.parse(userStorage));
-          } else {
-            
-            setUser({});
-          }
+        }
+         
 
     }, []);
     
