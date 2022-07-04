@@ -15,7 +15,7 @@ export default function Home() {
     const {user} = useAuth();
 
     const [registers, setRegisters] = useState();
-
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
 
@@ -28,7 +28,16 @@ export default function Home() {
         promise.then(response => {
 
             setRegisters(response.data);
-            console.log(response.data);
+            
+            let sum = 0;
+
+            response.data.forEach(el => {
+
+                sum = el.type == "income" ? sum + parseFloat(el.value)  : sum - parseFloat(el.value);
+
+                
+            });
+            setTotal(parseFloat(sum).toFixed(2));
         });
 
      
@@ -47,23 +56,26 @@ export default function Home() {
                 <Records>
                     {registers == null ? (<DefaultInfoBox>Não há registros de entrada ou saída</DefaultInfoBox>) : (
 
+                        <>
+                            {registers.map( item =>
+                            
+                                        <Item>
+                                            <div className="title">
+                                                <span>{item.time}</span>
+                                                {item.description}
+                                            </div>
+                                            <div className={item.type == "income" ? "value green" : "value red" }  >
+                                                {item.type == "income" ? "+ " : "- " }
+                                                {item.value}
+                                            </div>
+                                        </Item> 
+                            )}
 
-                        registers.map( item =>
-                        
-                                    <Item>
-                                        <div className="title">
-                                            <span>05/11</span>
-                                            {item.description}
-                                        </div>
-                                        <div className={item.type == "income" ? "value green" : "value red" }  >
-                                            {item.type == "income" ? "+ " : "- " }
-                                            {item.value}
-                                        </div>
-                                    </Item> 
-                        )
-
-
-
+                            <Totals>
+                                <div>TOTAL</div>
+                                <div>{total}</div>
+                            </Totals>
+                       </>
                     )}
                 </Records>
 
@@ -117,6 +129,7 @@ const Records = styled.div`
     background: #FFFFFF;
     border-radius: 5px;
     padding: 10px;
+    position: relative;
 `;
 const Footer = styled.div`
     height: 180px;
@@ -185,4 +198,17 @@ const Item = styled.div`
     .value.red{
         color: #C70000;
     }
+`;
+const Totals = styled.div`
+    color: #000;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 `;
