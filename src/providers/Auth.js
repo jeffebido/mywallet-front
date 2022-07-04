@@ -6,11 +6,7 @@ export const AuthProvider = (props) => {
 
     const userStorage = localStorage.getItem("user");
     
-    const [user, setUser] = useState({
-        "id": null,
-        "name": null,
-        "token": null
-    });
+    const [user, setUser] = useState({});
     
     useEffect(() => {
         
@@ -22,11 +18,7 @@ export const AuthProvider = (props) => {
             setUser(JSON.parse(userStorage));
           } else {
             
-            setUser({
-                "id": null,
-                "name": null,
-                "token": null
-            });
+            setUser({});
           }
 
     }, []);

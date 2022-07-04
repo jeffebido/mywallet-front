@@ -8,16 +8,44 @@ export default function Login() {
 
     const navigate = useNavigate();
 
+    const {setUser} = useAuth([]);
+
     const [formEmail, setFormEmail] = useState("");
     const [formPassword, setFormPassword] = useState("");
 
+    
+    function enviaForm (event) {
+
+        event.preventDefault();
+
+        axios.post("http://127.0.0.1:5000/sign-in", {
+            email: formEmail,
+            password: formPassword
+		})
+        .then( response => {
+
+            setUser(response.data);//Salva dados no Contexto
+
+            localStorage.setItem("user", response.data);
+
+
+            navigate("/home");
+            
+           
+        } )
+        .catch((err) => {
+
+            console.error(err);
+            alert("Usuário ou senha incorreta!");
+        });
+    }
     return (
 
         <>  
             <Container>
                 <Logo>MyWallet</Logo>
 
-                <form>
+                <form onSubmit={enviaForm}>
                     <input type="email" placeholder="E-mail" value={formEmail} onChange={e => setFormEmail(e.target.value)} required ></input>
                     <input type="password" placeholder="Senha" value={formPassword} onChange={e => setFormPassword(e.target.value)} required ></input>
                     

@@ -13,6 +13,16 @@ export default function Home() {
 
     const navigate = useNavigate();
 
+    const [registers, setRegisters] = useState([]);
+
+
+    useEffect(() => {
+
+
+
+     
+    }, []);
+
     return (
 
         <>  

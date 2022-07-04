@@ -6,11 +6,36 @@ import {useAuth} from "../../../providers/Auth";
 
 export default function SignUp() {
 
+    const navigate = useNavigate();
 
     const [formName, setFormName] = useState("");
     const [formEmail, setFormEmail] = useState("");
     const [formPassword, setFormPassword] = useState("");
     const [formConfirmPassword, setFormConfirmPassword] = useState("");
+
+    function enviaForm (e) {
+		e.preventDefault();
+        
+        
+        
+
+		axios.post("http://127.0.0.1:5000/sign-up", {
+            name: formName,
+            email: formEmail,
+            password: formPassword, 
+            confirmPassword: formConfirmPassword, 
+		})
+        .then( response => {
+            
+            navigate("/");
+        } )
+        .catch((err) => {
+
+            console.error(err);
+            alert("Dados inválidos!");
+            
+        });
+	}
 
     return (
 
@@ -18,7 +43,7 @@ export default function SignUp() {
             <Container>
                 <Logo>MyWallet</Logo>
 
-                <form>
+                <form onSubmit={enviaForm}>
                     <input type="text" placeholder="Nome" value={formName} onChange={e => setFormName(e.target.value)} required ></input>
                     <input type="email" placeholder="E-mail" value={formEmail} onChange={e => setFormEmail(e.target.value)} required ></input>
                     <input type="password" placeholder="Senha" value={formPassword} onChange={e => setFormPassword(e.target.value)} required ></input>
